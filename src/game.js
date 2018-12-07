@@ -3,6 +3,7 @@ import {CoveredDeck, newDeck} from './decks.js'
 import Player from './player'
 
 const numPlayers = 2;
+const maxCardsPerPlayer = 5;
 
 export default class Game extends React.Component {
     constructor(props) {
@@ -11,9 +12,11 @@ export default class Game extends React.Component {
             turn: 0, 
             coveredDeck: newDeck(),
             cardsPlayerOne: [],
-            cardsPlayerTwo: []
+            cardsPlayerTwo: [],
+            gameOver: false
         }
     }
+
     uncoverOneCard() {
         let newCoveredDeck = this.state.coveredDeck.slice()
         let oneCard = newCoveredDeck.pop();
@@ -28,28 +31,34 @@ export default class Game extends React.Component {
         }
 
         turn =  turn + 1;
+
+        let newGameOver = (newCoveredDeck.length === 0 || newCardsPlayerTwo.length === maxCardsPerPlayer );
+
         this.setState({
-            coveredDeck: newCoveredDeck,
+            coveredDeck: newGameOver ? [] : newCoveredDeck,
             turn : turn%numPlayers,
             cardsPlayerOne: newCardsPlayerOne,
-            cardsPlayerTwo: newCardsPlayerTwo
+            cardsPlayerTwo: newCardsPlayerTwo,
+            gameOver: newGameOver
         })
+
     }
 
     newGame() {
         this.setState({
             coveredDeck: newDeck(),
-            uncoveredDeck: []
+            cardsPlayerOne: [],
+            cardsPlayerTwo: [],
+            turn: 0,
+            gameOver: false
         });
     }
 
     render() {
         return (
             <div>
-                <p>
-                    Cards left: {this.state.coveredDeck.length}
-                    <NewGame onClick={() => this.newGame()}/>
-                </p>
+                <GameStatus game={this}/>
+                <NewGame onClick={() => this.newGame()}/>
                 <div id="coveredDeck" onClick={() => this.uncoverOneCard()}>
                     <CoveredDeck cards={this.state.coveredDeck}/>
                 </div>
@@ -65,4 +74,13 @@ function NewGame(props) {
     return (
         <button onClick={props.onClick}>New Game</button>
     )
+}
+
+function GameStatus(props) {
+    if (props.game.state.gameOver) {
+        return (<h2>Game Over</h2>)
+    } else {
+        return (<h2>Cards left: {props.game.state.coveredDeck.length}</h2>)        
+    }
+    
 }
