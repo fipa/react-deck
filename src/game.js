@@ -1,23 +1,38 @@
 import React from 'react';
-import {CoveredDeck, UncoveredDeck, newDeck} from './decks.js'
+import {CoveredDeck, newDeck} from './decks.js'
+import Player from './player'
+
+const numPlayers = 2;
 
 export default class Game extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            turn: 0, 
             coveredDeck: newDeck(),
-            uncoveredDeck: []
+            cardsPlayerOne: [],
+            cardsPlayerTwo: []
         }
     }
     uncoverOneCard() {
         let newCoveredDeck = this.state.coveredDeck.slice()
         let oneCard = newCoveredDeck.pop();
-        
-        let newUncoveredDeck = this.state.uncoveredDeck.slice();
-        newUncoveredDeck.push(oneCard);
+        let newCardsPlayerOne = this.state.cardsPlayerOne.slice()
+        let newCardsPlayerTwo = this.state.cardsPlayerTwo.slice()
+        let turn = this.state.turn;
+
+        if (turn %numPlayers === 0) {
+            newCardsPlayerOne.push(oneCard);
+        } else {
+            newCardsPlayerTwo.push(oneCard);
+        }
+
+        turn =  turn + 1;
         this.setState({
             coveredDeck: newCoveredDeck,
-            uncoveredDeck: newUncoveredDeck
+            turn : turn%numPlayers,
+            cardsPlayerOne: newCardsPlayerOne,
+            cardsPlayerTwo: newCardsPlayerTwo
         })
     }
 
@@ -39,9 +54,8 @@ export default class Game extends React.Component {
                     <CoveredDeck cards={this.state.coveredDeck}/>
                 </div>
                 <br/><br/><hr/>
-                <div id="uncoveredDeck">
-                    <UncoveredDeck cards={this.state.uncoveredDeck}/>
-                </div>
+                <Player name="P1" cards={this.state.cardsPlayerOne} />
+                <Player name="P2" cards={this.state.cardsPlayerTwo} />
             </div>
         );
     }

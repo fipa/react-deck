@@ -7,4 +7,5 @@ DONE!
 6. Las cartas tienen un valor de número/pinta, barajadas. Deck de 52 cartas. Al hacer click se muestra el número de la carta siguiente. Se muestra un contador de cuantas cartas quedan en el deck.
 7. Las cartas tienen un dibujo de su número/pinta, barajadas. Deck de 52 cartas. Al hacer click se muestra la imagen de la carta siguiente. Se muestra un contador de cuantas cartas quedan en el deck.
 TODO
-8. Obtener algo desde un backend y mostrar su valor.
+8. Repartir una carta a jugador 1 y jugador 2, por turnos.
+9. Después de un máximo de N cartas, el juego se da por terminado.
