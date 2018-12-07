@@ -31,11 +31,11 @@ function newDeck() {
     
     for (let i=0; i < 13; i++) {
         for(let j=0; j < 4; j++) {
-            deck.push(numbers[i] + "_of_" + suits[j]);
+            deck.push({number: numbers[i], suit: suits[j], card:numbers[i] + "_of_" + suits[j]});
         }
-        
     }
-    deck.push("red_joker", "black_joker");
+    deck.push({number: 20, suit: null, card: "red_joker"});
+    deck.push({number: 20, suit: null, card: "black_joker"});
 
 
     deck.sort(function(a, b){return 0.5 - Math.random()});

@@ -78,9 +78,20 @@ function NewGame(props) {
 
 function GameStatus(props) {
     if (props.game.state.gameOver) {
-        return (<h2>Game Over</h2>)
+        let pointsPlayerOne = getPoints(props.game.state.cardsPlayerOne);
+        let pointsPlayerTwo = getPoints(props.game.state.cardsPlayerTwo);
+
+        return (<h2>Game Over. Winner: {pointsPlayerOne > pointsPlayerTwo ? "P1" : "P2"}</h2>)
     } else {
         return (<h2>Cards left: {props.game.state.coveredDeck.length}</h2>)        
     }
     
+}
+
+function getPoints(cards) {
+    let sum = 0;
+    cards.forEach(card => {
+        sum+= card.number;
+    });
+    return sum;
 }

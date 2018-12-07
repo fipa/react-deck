@@ -5,7 +5,7 @@ export default class Card extends React.Component {
     render() {
         let imageFile = "imgs/";
         if (this.props.visible) {
-            imageFile += this.props.value;
+            imageFile += this.props.value.card;
         } else {
             imageFile += "coveredCard";
         }
