@@ -31,7 +31,7 @@ function newDeck() {
     
     for (let i=0; i < 13; i++) {
         for(let j=0; j < 4; j++) {
-            deck.push({number: numbers[i], suit: suits[j], card:numbers[i] + "_of_" + suits[j]});
+            deck.push({number: i+1, suit: suits[j], card:numbers[i] + "_of_" + suits[j]});
         }
     }
     deck.push({number: 20, suit: null, card: "red_joker"});
